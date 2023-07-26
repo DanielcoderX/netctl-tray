@@ -1,7 +1,7 @@
 use crate::Opt;
 use notify::{
     event::{Event as NEvent, EventKind as NEventKind},
-    immediate_watcher, RecursiveMode, Watcher,
+    RecursiveMode, Watcher
 };
 use std::fs;
 use std::fs::File;
@@ -9,7 +9,7 @@ use std::io::prelude::*;
 use std::process::Command;
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
-
+use std::path::Path;
 #[derive(Debug)]
 pub struct State {
     pub link_quality: u8,
@@ -23,7 +23,7 @@ pub fn inotify_watch(
     dir: &str,
 ) -> Result<(), notify::Error> {
     // initialize the inotify watcher
-    let mut watcher = immediate_watcher(move |res: Result<NEvent, _>| match res {
+    let mut watcher: notify::INotifyWatcher = notify::recommended_watcher(move |res: Result<NEvent, _>| match res {
         Ok(event) => {
             match event.kind {
                 NEventKind::Create(_) => {
@@ -64,7 +64,7 @@ pub fn inotify_watch(
         Err(e) => eprintln!("watch error: {:?}", e),
     })?;
 
-    watcher.watch(dir, RecursiveMode::Recursive)?;
+    watcher.watch(Path::new(dir), RecursiveMode::Recursive)?;
 
     Ok(())
 }

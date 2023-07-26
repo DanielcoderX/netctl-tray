@@ -1,17 +1,17 @@
 [package]
 name = "netctl-tray"
-version = "0.2.1"
-authors = ["Ponas <mykolas.peteraitis@gmail.com>"]
-edition = "2018"
+version = "0.3.0"
+authors = ["Ponas <danyalghlaby@gmail.com>"]
+edition = "2021"
 
 [dependencies]
 qt_widgets = "0.3.0"
 qt_gui = "0.3.0"
-notify = "5.0.0-pre.2" # watching filesystem
-notify-rust = "3" # desktop notifications
+notify = "6.0.0" # watching filesystem
+notify-rust = "4.8.0" # desktop notifications
 structopt = "0.3.14"
-users = "0.10.0"
-ping = "0.2.0"
-
+users = "0.11.0"
+ping = "0.4.1"
+socket2 = "0.5.3"
 [features]
 auto = []
